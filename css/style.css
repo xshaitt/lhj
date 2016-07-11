@@ -1,0 +1,14 @@
+.box{
+    width:500px;
+    height:800px;
+    border:1px solid #000000;
+    margin:0px auto;
+    position: relative;
+    padding:5px;
+}
+.smallBox{
+    width:66px;
+    height:66px;
+    border:1px solid #ff0000;
+    position: absolute;
+}
