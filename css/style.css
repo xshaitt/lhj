@@ -39,6 +39,7 @@
     height:44px;
     top:515px;
     text-align: center;
+    cursor: pointer;
 }
 .betsBox img{
     width: 44px;
