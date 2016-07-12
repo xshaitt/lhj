@@ -12,3 +12,39 @@
     border:1px solid #ff0000;
     position: absolute;
 }
+.number{
+    display: block;
+    width: 40px;
+    height:20px;
+    border: 1px solid #000000;
+    color: #ff0000;
+}
+.fen{
+    width:44px;
+    height: 40px;
+    position: absolute;
+    text-align: center;
+}
+.score{
+    top:80px;
+    left:162px;
+}
+.total{
+    top:80px;
+    left:308px;
+}
+.betsBox{
+    position: absolute;
+    width: 44px;
+    height:44px;
+    top:515px;
+    text-align: center;
+}
+.betsBox img{
+    width: 44px;
+    height:44px;
+}
+.buttonBox{
+    position: absolute;;
+    top:600px;
+}
