@@ -33,23 +33,21 @@
         <div class="smallBox" style="top: 222px;"><img src="./images/cha.png" /></div>
         <div class="smallBox" style="top: 150px;"><img src="./images/b_apple.png" /></div>
         <div class="smallBox" style="top: 78px;"><img src="./images/s_alarm.png" /></div>
-        <!--<div style="width:68px;height:68px;position: absolute;background-color:rgba(255,0,0,0.2);left:78px;"></div>-->
         <div class="fen score"><span>得分</span><span class="number"></span></div>
         <div class="fen total"><span>总分</span><span class="number"></span></div>
-        <div class="betsBox" style="left:60px;" best="bar"><img src="./images/s_bar.png" /><span class="number"></span></div>
-        <div class="betsBox" style="left:110px;" best="watermelons"><img src="./images/s_watermelons.png" /><span class="number"></span></div>
-        <div class="betsBox" style="left:160px;" best="77"><img src="./images/s_77.png" /><span class="number"></span></div>
-        <div class="betsBox" style="left:210px;" best="star"><img src="./images/s_star.png" /><span class="number"></span></div>
-        <div class="betsBox" style="left:260px;" best="apple"><img src="./images/s_apple.png" /><span class="number"></span></div>
-        <div class="betsBox" style="left:310px;" best="orange"><img src="./images/s_orange.png" /><span class="number"></span></div>
-        <div class="betsBox" style="left:360px;" best="coconut"><img src="./images/s_coconut.png" /><span class="number"></span></div>
-        <div class="betsBox" style="left:410px;" best="alarm"><img src="./images/s_alarm.png" /><span class="number"></span></div>
+        <div class="betsBox" style="left:60px;" best="0"><img src="./images/s_bar.png" /><span class="number"></span></div>
+        <div class="betsBox" style="left:110px;" best="1"><img src="./images/s_watermelons.png" /><span class="number"></span></div>
+        <div class="betsBox" style="left:160px;" best="2"><img src="./images/s_77.png" /><span class="number"></span></div>
+        <div class="betsBox" style="left:210px;" best="3"><img src="./images/s_star.png" /><span class="number"></span></div>
+        <div class="betsBox" style="left:260px;" best="4"><img src="./images/s_apple.png" /><span class="number"></span></div>
+        <div class="betsBox" style="left:310px;" best="5"><img src="./images/s_orange.png" /><span class="number"></span></div>
+        <div class="betsBox" style="left:360px;" best="6"><img src="./images/s_coconut.png" /><span class="number"></span></div>
+        <div class="betsBox" style="left:410px;" best="7"><img src="./images/s_alarm.png" /><span class="number"></span></div>
         <div class="buttonBox" style="left: 58px;"><button>投币</button></div>
         <div class="buttonBox" style="left: 108px;"><button>退币</button></div>
         <div class="buttonBox" style="left: 158px;"><button>开始</button></div>
     </div>
     <script>
-        bets = {'bar':0,'watermelons':0,'77':0,'star':0,'apple':0,'orange':0,'coconut':0,'alarm':0};
         init();
         //下注
         $('.betsBox').click(function () {
@@ -79,20 +77,12 @@
             //只要下注了就可以走起来
             if(isBest())
             {
-                ;
+                //生成结果，根据start与lamp变量的值，决定开始的位置，来生成灯
+                result = target();
+                generateLamp();
             }
         }
-        function isBest()
-        {
-            for(var x in bets)
-            {
-                if(bets[x] != 0)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+
     </script>
 </body>
 </html>
