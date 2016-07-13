@@ -132,7 +132,7 @@ function generateLamp()
         }
     },1000);
 }
-//让灯光走起来
+//让灯走起来
 function runLamp()
 {
     /*
@@ -156,6 +156,7 @@ function runLamp()
         }
     },50);
 }
+//只保留最后一个灯
 function clearLamp()
 {
     //只留下一个最后面的
