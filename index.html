@@ -52,8 +52,20 @@
         //下注
         $('.betsBox').click(function () {
             //只有total有余额才可以下注
+            add();
             if(total>0)
             {
+                //如果已经运行过一次，并且是第一次下注，那么先清空下的注，再进行加注
+                if(result != null && !isFirstBets)
+                {
+                    console.log('xxxx');
+                    for(var x in bets)
+                    {
+                        bets[x] = 0;
+                        $('.betsBox:eq('+x+') .number').html(fill(0));
+                    }
+                    isFirstBets = true;
+                }
                 total--;
                 $('.total .number').html(fill(total));
                 bets[$(this).attr('best')]++;
@@ -61,10 +73,36 @@
             }
         });
         $('.buttonBox button').click(function () {
-            if($(this).text() == '开始')
-            {
-                run();
-            }
+                if($(this).text() == '开始')
+                {
+                    if(!isStart) {
+                        isStart = true;
+                        //根据当局是否有下注过而判断是否扣除下注的费用
+                        if(result != null && isFirstBets == false)
+                        {
+                            //不是第一局，而且没下注过，需要先扣钱，再run
+                            add();
+                            //不是第一局的话，先把之前的灯清空
+                            var tmp = 0;
+                            for(var x in bets)
+                            {
+                                tmp += bets[x];
+                            }
+                            if(tmp<=total)
+                            {
+                                total-=tmp;
+                                $('.total .number').html(fill(total));
+                            }else
+                            {
+                                return false;
+                            }
+                        }
+                        runLampMax = ran(48,55);
+                        lamp = ran(4,6);
+                        $('.lamp:eq(0)').remove();
+                        run();
+                    }
+                }
         });
         //老虎机，跑起来
         function run() {

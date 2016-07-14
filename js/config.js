@@ -6,19 +6,23 @@ total = 400;
 score = 0;
 //必须有24个元素，可以为0
 probability = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,10000];
-bets = [0,0,0,0,0,0,0,0]
+bets = [0,0,0,0,0,0,0,0];
 //最后会走到的选项
-result = 0;
-start = 0;
+result = null;
+//起始的位置
 lampTime = null;
 runTime = null;
 clearLampTime = null;
-lamp = 5;
+lamp = null;
 //下一个灯的位置
 nowLamp = 0;
-runLampMax = ran(48,55);
+runLampMax = null;
 //元素映射倍率下注表
 betsInPro = [[10,5],[10,7],[50,0],[100,0],[15,4],[5,4],[10,6],[20,1],[5,1],[0,0],[15,4],[3,5],[10,5],[10,7],[5,2],[20,2],[15,4],[3,6],[10,6],[20,3],[5,3],[0,0],[15,4],[3,7]];
+//用来判断老虎是否已经运行，如果已经运行则在点击开始后不执行任何操作
+isStart = false;
+//有没有下注过，根据这个状态决定下注的时候是否需要清空之前已经下的注，以及开始游戏的时候是否需要扣除对应的钱
+isFirstBets = false;
 /*
 * 跑马灯大概有这几个属性
 * 1.初始时定义N个，从上一次结束的地方，开始一个个的增加
@@ -119,12 +123,14 @@ function isBest()
 function generateLamp()
 {
     lampTime = setInterval(function () {
-        //获取到需要插入的位置，再插入
-        var top = $('.smallBox')[start].style.top==''?'5px':$('.smallBox')[start].style.top;
-        var left = $('.smallBox')[start].style.left==''?'5px':$('.smallBox')[start].style.left;
+        //获取到需要插入的位置，再插入。
+        var top = $('.smallBox').eq(nowLamp).css("top")==''?'5px':$('.smallBox').eq(nowLamp).css("top");
+        var left = $('.smallBox').eq(nowLamp).css("left")==''?'5px':$('.smallBox').eq(nowLamp).css("left");
         $('.box').append('<div class="lamp" style="width:68px;height:68px;position: absolute;background-color:rgba(255,0,0,0.2);top:'+top+';left:'+left+';"></div>')
-        start++;
-        if(start>=lamp)
+        //插完一个向下移一个
+        nowLamp = nowLamp+1==24?0:nowLamp+1;
+        //灯的数量够了，则中断
+        if($('.lamp').length>=lamp)
         {
             clearInterval(lampTime);
             lampTime = null;
@@ -139,8 +145,8 @@ function runLamp()
      * 1.直接删除第一个，再插入最后一个，但这样有一点需要保证，就是保证最后一个的位置要是新的位置
      * 2.本来准备想想是不是还有其它的方法的，但现在既然想到了一个有行且可用的方法，那么就先做喽
      * */
-    //第一个灯要移动的位置，就是灯的数量
-    nowLamp = lamp;
+    //每创建一个灯，nowLamp就会向前移，那么也就是说不用人为的控制nowLamp
+    // nowLamp = lamp;
     runTime = setInterval(function () {
         var top = $('.smallBox')[nowLamp].style.top==''?'5px':$('.smallBox')[nowLamp].style.top;
         var left = $('.smallBox')[nowLamp].style.left==''?'5px':$('.smallBox')[nowLamp].style.left;
@@ -169,6 +175,7 @@ function clearLamp()
                 clearInterval(clearLampTime);
                 clearLampTime = null;
                 stopLamp(nowLamp,result);
+                nowLamp = parseInt(result,10);
             }
         },200);
     }
@@ -179,5 +186,17 @@ function balance() {
     {
         score = betsInPro[result][0]*bets[betsInPro[result][1]];
         $('.score .number').html(fill(score));
+        isStart = false;
+    }
+}
+//把得分加到总分里
+function add()
+{
+    if(score>0)
+    {
+        total+=score;
+        score=0;
+        $('.score .number').html(fill(score));
+        $('.total .number').html(fill(total));
     }
 }
